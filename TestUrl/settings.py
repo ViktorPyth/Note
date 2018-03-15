@@ -25,7 +25,7 @@ SECRET_KEY = '@ufvn(*$rt3!(5&u0u-$%4ig2w0kldp+8xnjpjlplldrv7z$w!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '<Viktor>.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'viktorpyth.pythonanywhere.com']
 
 
 # Application definition
