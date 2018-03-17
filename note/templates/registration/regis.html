@@ -1,0 +1,13 @@
+{% extends "note/base.html" %}
+
+{% block content %}
+   <div class="large-offset-3 large-6 columns">
+       <form action="/accounts/registration/" method="post">
+           {% csrf_token %}
+           {{form}}
+
+         <p> </p>
+          <p> <input type="submit" value="Зарегистрироваться" /> </p>
+       </form>
+   </div>
+{% endblock %}
