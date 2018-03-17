@@ -3,8 +3,17 @@
 {% block content %}
     <div class="post">
         <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        {% if post.like == True  %}
+           <div class="date">
+              {{ post.created_date }}
+           </div>
+        {% else %}
+           <a class="btn btn-default" href="{% url 'post_like' pk=post.pk %}">Like</a>
+        {% endif %}
+        <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
          <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaksbr }}</p>
+        <p>{{post.like}}</p>
     </div>
     <div class="date">
                 {{ post.created_date }}

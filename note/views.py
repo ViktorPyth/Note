@@ -41,9 +41,19 @@ def post_edit(request, pk):
             post = form.save(commit=False)
             post.author = request.user
             post.created_date = post.created_date
-            post.like = False
+            post.like = post.like
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
     return render(request, 'note/post_new.html', {'form': form})
+
+def post_like(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.like()
+    return redirect('post_detail', pk=pk)
+
+def post_remove(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    return redirect('post_list')
