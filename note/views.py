@@ -29,12 +29,17 @@ def register( request):
 
 
 def post_list(request):
-    posts = Post.objects.filter(created_date__lte=timezone.now()).order_by('created_date')
+    if request.user.is_active:
+        posts = Post.objects.filter(created_date__lte=timezone.now(),author=request.user).order_by('created_date')
+    else:
+        posts = ()
     return render(request, 'note/post_list.html', {'posts': posts})
 
 @login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    if post.author != request.user:
+        post = get_object_or_404(Post, pk=0)
     return render(request, 'note/post_detail.html', {'post': post})
 
 @login_required
@@ -45,7 +50,7 @@ def post_new(request):
             post = form.save(commit=False)
             post.author = request.user
             post.created_date = timezone.now()
-            post.like = False
+            Post.like = False
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
@@ -60,7 +65,7 @@ def post_edit(request, pk):
             post = form.save(commit=False)
             post.author = request.user
             post.created_date = post.created_date
-            post.like = post.like
+            #post.like = post.like
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
@@ -69,10 +74,34 @@ def post_edit(request, pk):
 @login_required
 def post_like(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    post.like()
+    post.luke()
     return redirect('post_detail', pk=pk)
 @login_required
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return redirect('post_list')
+
+
+def search_form(request):
+    return render_to_response('note/search_form.html')
+
+def search(request):
+   if 'q' in request.GET and request.GET['q']:
+      q = request.GET['q']
+      post = Post.objects.filter(title__icontains=q)
+      return render(request, 'note/post_list.html', {'posts': post})
+   else:
+       return redirect('post_list')
+
+"""def post_search(request):
+    post = Post.objects.all()
+    if request.method == "POST":
+        form = request.GET.get('q')
+        result = form.base_fields['search']
+        input('2')
+    if request.user.is_active:
+        posts = post.filter(title__icontains = result)
+    else:
+        posts = ()
+    return render(request, 'note/post_list.html', {'posts': posts})"""

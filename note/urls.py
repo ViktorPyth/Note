@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^post/(?P<pk>\d+)/like/$', views.post_like, name='post_like'),
     url(r'^post/(?P<pk>\d+)/remove/$', views.post_remove, name='post_remove'),
     url(r'^accounts/registration/$', views.register, name='registr'),
+    url(r'^search-form/$', views.search_form , name='search_form'),
+    url(r'^search/$', views.search, name='search' ),
 ]
