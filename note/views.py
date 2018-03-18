@@ -50,7 +50,7 @@ def post_new(request):
             post = form.save(commit=False)
             post.author = request.user
             post.created_date = timezone.now()
-            Post.like = False
+            post.like()
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
