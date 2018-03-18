@@ -87,12 +87,12 @@ def search_form(request):
     return render_to_response('note/search_form.html')
 
 def search(request):
-   if 'q' in request.GET and request.GET['q']:
-      q = request.GET['q']
-      post = Post.objects.filter(title__icontains=q)
+   if 'title' in request.GET and request.GET['title']:
+      title = request.GET['title']
+      post = Post.objects.filter(title__icontains=title , author = request.user)
       return render(request, 'note/post_list.html', {'posts': post})
    else:
-       return redirect('post_list')
+       return redirect('post_list', pk=0)
 
 """def post_search(request):
     post = Post.objects.all()
