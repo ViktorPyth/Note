@@ -21,6 +21,14 @@
 
           {% endif %}
     </div>
+     <div>
+      {% if user.is_authenticated %}
+                      <h3 align="right>">
+            <a>Сортировать по: </a>
+            <a href="{% url 'sort_dataa' %}" > Дате</a>
+             <a href="{% url 'sort_alpha' %}" > Алфавиту</a>
+             <a href="{% url 'sort_likea' %}" > Избранным</a> </h3>
+              {% endif %} </div>
     <div class="content container">
         <div class="row">
             <div class="col-md-8">

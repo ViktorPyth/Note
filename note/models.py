@@ -7,18 +7,21 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     text = models.TextField()
     created_date = models.DateTimeField( default=timezone.now)
-    like = models.NullBooleanField()
     category = models.CharField(max_length=20)
+    like = models.BooleanField(False)
 
 
-    def like(self):
+   # def like(self):
 
-      #  self.like = None
-        self.save()
+    #    self.like = True
+     #   self.save()
 
     def __str__(self):
         return self.title
 
     def luke(self):
-        self.like = True
+        if self.like == True:
+            self.like = False
+        else:
+            self.like = True
         self.save()

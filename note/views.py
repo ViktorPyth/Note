@@ -50,7 +50,7 @@ def post_new(request):
             post = form.save(commit=False)
             post.author = request.user
             post.created_date = timezone.now()
-            post.like()
+            post.like = False
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
@@ -86,6 +86,7 @@ def post_remove(request, pk):
 def search_form(request):
     return render_to_response('note/search_form.html')
 
+
 def search(request):
    if 'title' in request.GET and request.GET['title']:
       title = request.GET['title']
@@ -94,14 +95,26 @@ def search(request):
    else:
        return redirect('post_list', pk=0)
 
-"""def post_search(request):
-    post = Post.objects.all()
-    if request.method == "POST":
-        form = request.GET.get('q')
-        result = form.base_fields['search']
-        input('2')
+
+def sort_alpha(request):
     if request.user.is_active:
-        posts = post.filter(title__icontains = result)
+        posts = Post.objects.filter(author=request.user).order_by('title')
     else:
         posts = ()
-    return render(request, 'note/post_list.html', {'posts': posts})"""
+    return render(request, 'note/post_list.html', {'posts': posts})
+
+
+def sort_likea(request):
+    if request.user.is_active:
+        posts = Post.objects.filter(like = True , author=request.user)
+    else:
+        posts = ()
+    return render(request, 'note/post_list.html', {'posts': posts})
+
+
+def sort_dataa(request):
+    if request.user.is_active:
+        posts = Post.objects.filter(created_date__lte=timezone.now(),author=request.user).order_by('created_date')
+    else:
+        posts = ()
+    return render(request, 'note/post_list.html', {'posts': posts})

@@ -11,4 +11,7 @@ urlpatterns = [
     url(r'^accounts/registration/$', views.register, name='registr'),
     url(r'^search-form/$', views.search_form , name='search_form'),
     url(r'^search/$', views.search, name='search' ),
+    url(r'^sort_dataa/$', views.sort_dataa, name='sort_dataa'),
+    url(r'^sort_alpha/$', views.sort_alpha, name='sort_alpha'),
+    url(r'^sort_likea/$', views.sort_likea, name='sort_likea'),
 ]
